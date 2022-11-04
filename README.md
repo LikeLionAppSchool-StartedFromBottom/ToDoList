@@ -16,7 +16,7 @@ def fooBar(): (O, 카멜 기법)
 ```
 
 ## 👀 Samples
-![[Pasted image 20221104140905.png]]
+![Sample Screenshot](./img/ReadmeSampleImg.png)
 
 ## 🧑‍💻 Functions
 1. 싱글페이지 어플리케이션으로 `프로토타입`을 만든다
