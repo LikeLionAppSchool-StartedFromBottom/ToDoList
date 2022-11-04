@@ -14,10 +14,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var inputText: String = ""
+    @State private var todoListData: String = ""
+    
     var body: some View {
         VStack {
-            TextField("내용을 입력하세요.", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
-           
+            HStack {
+                // To do 내용을 입력하는 TextField
+                TextField("Please Enter the Text", text: $inputText)
+                
+                // TextField 내용을 저장 후 리스트로 보여줍니다.
+                Button {
+                    // 버튼을 눌렀을때 처리하는 액션
+                } label: {
+                    Text("저장")
+                }
+
+            }
+            // 입력받은 내용을 보여주는 리스트
+            List {
+                Text(inputText)
+                
+            }
         }
         .padding()
     }
