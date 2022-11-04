@@ -27,22 +27,53 @@ struct ContentView: View {
                 // TextField 내용을 저장 후 리스트로 보여줍니다.
                 Button {
                     inputListData()
+                    // 저장을 누른 다음에 TextField를 초기화한다.
+                    inputText = ""
                 } label: {
                     Text("저장")
-                    // 저장을 누른 다음에 초기화 기능을 넣는다
+                    
                 }
                 
             }
+            .padding(.horizontal)
             // 입력받은 내용을 보여주는 리스트
             List {
-                //forEach로 뿌려준다.
-                ForEach(todoListData, id: \.self) { item in
-                    Text("\(item)")
-                }
                 
+                //forEach로 뿌려준다.
+                if !todoListData.isEmpty {
+                    
+                    ForEach(todoListData, id: \.self) { item in
+                        HStack {
+                            // 장식용 버전(추후 구현할 체크박스)
+                            Image(systemName: "checkmark.square")
+                            
+                            Text("\(item)")
+                            
+                            Spacer()
+                            
+                            Button {
+                                // 수정 액션 넣어야 합니다.
+                            } label: {
+                                Text("수정")
+                            }
+                            
+                            Button {
+                                // 삭제 액션 넣어야 합니다. 
+                            } label: {
+                                Text("삭제")
+                            }
+
+                        }
+                       
+                        
+                    }
+                    
+                } else {
+                    Text("데이터가 없습니다.")
+                }
             }
         }
-        .padding()
+      
     }
     func inputListData() {
         // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
