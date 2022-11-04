@@ -29,12 +29,16 @@ struct ContentView: View {
                     inputListData()
                 } label: {
                     Text("저장")
+                    // 저장을 누른 다음에 초기화 기능을 넣는다
                 }
-
+                
             }
             // 입력받은 내용을 보여주는 리스트
             List {
-                Text(inputText)
+                //forEach로 뿌려준다.
+                ForEach(todoListData, id: \.self) { item in
+                    Text("\(item)")
+                }
                 
             }
         }
