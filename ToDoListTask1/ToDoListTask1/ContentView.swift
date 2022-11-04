@@ -16,7 +16,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var inputText: String = ""
-    @State private var todoListData: String = ""
+    @State var todoListData: Array<String> = []
     
     var body: some View {
         VStack {
@@ -26,7 +26,7 @@ struct ContentView: View {
                 
                 // TextField 내용을 저장 후 리스트로 보여줍니다.
                 Button {
-                    // 버튼을 눌렀을때 처리하는 액션
+                    inputListData()
                 } label: {
                     Text("저장")
                 }
@@ -39,6 +39,11 @@ struct ContentView: View {
             }
         }
         .padding()
+    }
+    func inputListData() {
+        // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
+        todoListData.append("\(inputText)")
+        print("\(todoListData)")
     }
 }
 
