@@ -23,6 +23,8 @@ struct ContentView: View {
     
     @State private var inputText: String = ""
     @State var todoListData: Array<String> = []
+    @State private var showingAlert = false
+    
     
     var body: some View {
         VStack {
@@ -32,71 +34,80 @@ struct ContentView: View {
                 
                 // TextField 내용을 저장 후 리스트로 보여줍니다.
                 Button {
-                    inputListData()
-//                    // 저장을 누른 후 TextField를 초기화한다.
-//                    inputText = ""
-                } label: {
-                    Text("저장")
-                    
-                }
-                
-            }
-            .padding(.horizontal)
-            // 입력받은 내용을 보여주는 리스트
-            List {
-                
-                //forEach로 뿌려준다.
-                if !todoListData.isEmpty {
-                    
-                    ForEach(todoListData, id: \.self) { item in
-                        HStack {
-                            // 장식용 버전(추후 구현할 체크박스)
-                            Image(systemName: "checkmark.square")
-                            
-                            Text("\(item)")
-                            
-                            Spacer()
-                            
-                            Button {
-                                // 수정 액션 넣어야 합니다.
-                            } label: {
-                                Text("수정")
-                            }
-                            
-                            Button {
-                                // 삭제 액션 넣어야 합니다.
-                            } label: {
-                                Text("삭제")
-                            }
-
-                        }
-                       
-                        
+//                    inputListData()
+                    //                    // 저장을 누른 후 TextField를 초기화한다.
+                    //                    inputText = ""
+                    // 조건문을 통해서 텍스트가 있으면 todolist_appen가 들어가고 없으면 추가를 할 수 없게
+                    // inputText 데이터가 있는 경우
+                    if !inputText.isEmpty {
+                        // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
+                        todoListData.append("\(inputText)")
+                        print("\(todoListData)")
+                        inputText = ""
+                    } else {
+                        showingAlert = true
                     }
-                    
-                } else {
-                    Text("Empty")
-                        .foregroundColor(.gray)
+                } label: {
+                    Text("save")
+                }
+                .alert("내용을 입력해주세요!", isPresented: $showingAlert) {
+                    Button("OK") {}
+                } message: {
+                    Text("짠")
                 }
             }
         }
-      
-    }
-    func inputListData() {
-        
-        // 삼항연산자를 통해서 텍스트가 있으면 todolist_appen가 들어가고 없으면 추가를 할 수 없게
-        // inputText 데이터가 있는 경우
-        if !inputText.isEmpty {
-            // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
-            todoListData.append("\(inputText)")
-            print("\(todoListData)")
-            inputText = ""
-        } else {
-  
+        .padding(.horizontal)
+        // 입력받은 내용을 보여주는 리스트
+        List {
             
+            //forEach로 뿌려준다.
+            if !todoListData.isEmpty {
+                
+                ForEach(todoListData, id: \.self) { item in
+                    HStack {
+                        // 장식용 버전(추후 구현할 체크박스)
+                        Image(systemName: "checkmark.square")
+                        
+                        Text("\(item)")
+                        
+                        Spacer()
+                        
+                        Button {
+                            // 수정 액션 넣어야 합니다.
+                        } label: {
+                            Text("수정")
+                        }
+                        
+                        Button {
+                            // 삭제 액션 넣어야 합니다.
+                        } label: {
+                            Text("삭제")
+                        }
+                    }
+                }
+                
+            } else {
+                Text("Empty")
+                    .foregroundColor(.gray)
+            }
         }
     }
+    
 }
+//func inputListData() {
+    
+    //        // 삼항연산자를 통해서 텍스트가 있으면 todolist_appen가 들어가고 없으면 추가를 할 수 없게
+    //        // inputText 데이터가 있는 경우
+    //        if !inputText.isEmpty {
+    //            // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
+    //            todoListData.append("\(inputText)")
+    //            print("\(todoListData)")
+    //            inputText = ""
+    //        } else {
+    //        }
+//}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
