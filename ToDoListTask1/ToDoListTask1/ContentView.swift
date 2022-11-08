@@ -26,16 +26,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var inputText: String = ""
-    @State var todoListData: Array<String> = []
+    //    @State var todoListData: Array<String> = []
     @State private var showingAlert: Bool = false
-    @State private var isDone: Bool = false
+    //    @State private var isDone: Bool = false
+    @State private var todoLists = [ToDoList]()
     
     var body: some View {
-        let tap = TapGesture()
-            .onEnded { _ in
-                isDone.toggle()
-            }
-        
         VStack {
             HStack {
                 // To do 내용을 입력하는 TextField
@@ -71,28 +67,26 @@ struct ContentView: View {
             List {
                 Section {
                     //forEach로 뿌려준다.
-                    if !todoListData.isEmpty {
-                        ForEach(todoListData, id: \.self) { item in
+                    if !todoLists.isEmpty {
+                        ForEach(0..<todoLists.count, id: \.self) { index in
                             HStack {
                                 // 완료 체크박스)
                                 Button(action: {
+                                    
+                                    checkIsDone(index)
                                 }, label: {
                                     ZStack {
-                                        if isDone == true {
-                                            Image(systemName: "checkmark")
-                                        }
-                                        Image(systemName: "square")
-                                            .gesture(tap)
+                                        todoLists[index].isDone ? Image(systemName: "checkmark.square") : Image(systemName: "square")
+                                        
                                     }
                                 })
                                 
-                                
-                                Text("\(item)")
+                                Text("\(todoLists[index].name)")
                                 
                                 Spacer()
                             }
                         }
-                        .onDelete(perform: deleteItem)
+                        //                        .onDelete(perform: deleteItem)
                     } else {
                         Text("Empty")
                             .foregroundColor(.gray)
@@ -106,18 +100,22 @@ struct ContentView: View {
     }
     func inputListData() {
         // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
-        todoListData.append("\(inputText)")
+        todoLists.append(ToDoList(name: inputText, isDone: false))
         // inputText를 초기화 합니다
         inputText = ""
     }
     
-    func deleteItem(at offsets: IndexSet) {
-        // p.272 배열에 있는 아이템을 remove하는 메소드를 활용하여
-        // 화면에서만 삭제되는 기능이 아니라 데이터에서도 삭제되게 함!
-        todoListData.remove(atOffsets: offsets)
+    //    func deleteItem(at offsets: IndexSet) {
+    //        // p.272 배열에 있는 아이템을 remove하는 메소드를 활용하여
+    //        // 화면에서만 삭제되는 기능이 아니라 데이터에서도 삭제되게 함!
+    //        todoListData.remove(atOffsets: offsets)
+    //    }
+    
+    
+    func checkIsDone(_ index: Int) {
+        todoLists[index].isDone.toggle()
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
