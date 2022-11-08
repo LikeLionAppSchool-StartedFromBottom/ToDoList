@@ -31,8 +31,12 @@ struct ContentView: View {
     @State private var isDone: Bool = false
     
     var body: some View {
+        let tap = TapGesture()
+            .onEnded { _ in
+                isDone.toggle()
+            }
+        
         VStack {
-
             HStack {
                 // To do 내용을 입력하는 TextField
                 TextField("Please Enter the Text", text: $inputText)
@@ -71,11 +75,18 @@ struct ContentView: View {
                         ForEach(todoListData, id: \.self) { item in
                             HStack {
                                 // 장식용 버전(추후 구현할 체크박스)
-                                ZStack {
-                                Image(systemName: "square")
-                                Image(systemName: "checkmark")
-                                }
-                            
+                                Button(action: {
+                                }, label: {
+                                    ZStack {
+                                        if isDone == true {
+                                            Image(systemName: "checkmark")
+                                        }
+                                        Image(systemName: "square")
+                                            .gesture(tap)
+                                    }
+                                })
+
+                                
                                 Text("\(item)")
                                 
                                 Spacer()
@@ -102,7 +113,7 @@ struct ContentView: View {
             
             
         }
-    
+        
     }
     func inputListData() {
         // 버튼을 눌렀을때 입력받은 inputText를 배열에 저장한다
