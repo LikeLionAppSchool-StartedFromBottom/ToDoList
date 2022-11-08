@@ -74,7 +74,7 @@ struct ContentView: View {
                     if !todoListData.isEmpty {
                         ForEach(todoListData, id: \.self) { item in
                             HStack {
-                                // 장식용 버전(추후 구현할 체크박스)
+                                // 완료 체크박스)
                                 Button(action: {
                                 }, label: {
                                     ZStack {
@@ -85,22 +85,11 @@ struct ContentView: View {
                                             .gesture(tap)
                                     }
                                 })
-
+                                
                                 
                                 Text("\(item)")
                                 
                                 Spacer()
-                                //                        Button {
-                                //                            // 수정 액션 넣어야 합니다.
-                                //                        } label: {
-                                //                            Text("수정")
-                                //                        }
-                                //
-                                //                        Button {
-                                //                            // 삭제 액션 넣어야 합니다.
-                                //                        } label: {
-                                //                            Text("삭제")
-                                //                        }
                             }
                         }
                         .onDelete(perform: deleteItem)
