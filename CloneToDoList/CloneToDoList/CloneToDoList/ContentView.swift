@@ -31,23 +31,30 @@ struct ContentView: View {
             
             // 리스트 적어 넣을 공간(TextField)
             HStack {
-                Image(systemName: "highlighter")
                 TextField(
                     "Input Your Task",
-                    text: $inputText,
+                    text: $inputText
                     // 엔터 치면 todoLists배열에 저장 되도록 하는 제스쳐
-                    onCommit: {
-                        appendTodoLists()
-                    })
+//                    onCommit: {
+//                        appendTodoLists()
+//                    }
+                )
+                Button (action: {
+                    appendTodoLists()
+                }, label: {
+                    Image(systemName: "highlighter")
+                })
             }
             
             // 투두 리스트 쪼르르 list아래 HStack을 바로 쓰면 두 개가 충돌이 일어남. 때문에 ForEach를 사용해서 하나씩 뿌려줘야한다.
-            List() {
+            List {
                 ForEach(0..<todoLists.count, id: \.self){ i in
                     HStack {
                         // 체크 박스 버튼
-                        Button(action: {}, label: {
-                            Image(systemName: "circle")
+                        Button(action: {
+                            toggleCheckedState(i)
+                        }, label: {
+                            Image(systemName: todoLists[i].isChecked == true ? "checkmark.circle" : "circle")
                         })
                         // 투두 리스트 텍스트
                         Text(todoLists[i].content)
@@ -58,10 +65,8 @@ struct ContentView: View {
                         })
                     }
                 }
-                
             }
             .listStyle(.plain)
-            
         }
         .padding()
     }
@@ -69,12 +74,14 @@ struct ContentView: View {
     // 텍스트필드의 입력받은 문자열을 변수 todoLists(배열)에 저장하는 함수
     func appendTodoLists() {
         let addList = TodoList(content: inputText, isChecked: false)
-        
         todoLists.append(addList)
         inputText = ""
-        
     }
     
+    // TodoList의 체크 여부를 toggle하는 함수
+    func toggleCheckedState(_ i: Int) {
+        todoLists[i].isChecked.toggle()
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
